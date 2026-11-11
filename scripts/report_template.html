@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Protein Design Dashboard</title>
+<style>
+:root{
+  --bg:#f3f4f7; --card:#ffffff; --ink:#14161a; --ink2:#586070; --muted:#8a90a0; --line:#e6e8ee; --grid:#eceef3; --chip:#eef0f5;
+  --blue:#2a78d6; --orange:#eb6834; --ok:#0b7a3b; --shadow:0 1px 2px rgba(20,22,26,.04),0 6px 20px rgba(20,22,26,.05);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1115; --card:#181b21; --ink:#f1f2f5; --ink2:#b4b9c6; --muted:#8a90a0; --line:#2a2e37; --grid:#262a33; --chip:#242831;
+    --blue:#3987e5; --orange:#d95926; --ok:#4cc27f; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1115; --card:#181b21; --ink:#f1f2f5; --ink2:#b4b9c6; --muted:#8a90a0; --line:#2a2e37; --grid:#262a33; --chip:#242831;
+  --blue:#3987e5; --orange:#d95926; --ok:#4cc27f; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25); color-scheme: dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top-in{max-width:1280px;margin:0 auto;padding:14px 20px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+h1{font-size:19px;margin:0;letter-spacing:-.01em}
+.sub{font-size:12.5px;color:var(--muted)}
+.pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{border:1px solid var(--line);background:var(--card);color:var(--ink2);border-radius:999px;padding:5px 13px;font:inherit;font-size:13px;cursor:pointer;transition:all .12s}
+.pill:hover{border-color:var(--ink2)}
+.pill[aria-pressed="true"]{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.legend{max-width:1280px;margin:0 auto;padding:10px 20px 0;display:flex;gap:20px;flex-wrap:wrap;font-size:12.5px;color:var(--ink2);align-items:center}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend .tt{color:var(--muted)}
+.grid{max-width:1280px;margin:0 auto;padding:14px 20px 40px;display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.card{background:var(--card);border-radius:16px;box-shadow:var(--shadow);padding:16px 18px 10px;min-width:0}
+.span3{grid-column:span 3}.span4{grid-column:span 4}.span5{grid-column:span 5}.span6{grid-column:span 6}.span7{grid-column:span 7}.span8{grid-column:span 8}.span12{grid-column:span 12}
+@media(max-width:1000px){.span4,.span5,.span6,.span7,.span8{grid-column:span 12}.span3{grid-column:span 6}}
+.ch{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+h2{font-size:15px;margin:0;font-weight:650;letter-spacing:-.005em}
+.say{font-size:13px;color:var(--ink2);margin:2px 0 4px}
+.info{display:inline-block;width:15px;height:15px;line-height:15px;text-align:center;border-radius:50%;border:1px solid var(--muted);color:var(--muted);font-size:10px;margin-left:6px;cursor:help;vertical-align:1px}
+.kpi .lab{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.kpi .big{font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1.15;margin-top:4px}
+.kpi .row{display:flex;gap:18px;margin-top:4px}
+.kpi .row div{flex:1}
+.kpi .who{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.kpi .num{font-size:22px;font-weight:700;letter-spacing:-.02em;white-space:nowrap}
+.kpi .note{font-size:12.5px;color:var(--ink2);margin-top:2px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-weight:600;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+.bar{position:relative;height:7px;background:var(--grid);border-radius:4px;min-width:70px}
+.bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
+.cell{display:flex;align-items:center;gap:8px}.cell span{min-width:42px;text-align:right;font-variant-numeric:tabular-nums}
+.sw{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px}
+.gates{list-style:none;margin:8px 0 0;padding:0}
+.gates li{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.gates li:last-child{border-bottom:0}
+.gates b{color:var(--ok);font-variant-numeric:tabular-nums}
+.slider{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:8px 0 6px;font-size:13px;color:var(--ink2)}
+.slider label{display:flex;align-items:center;gap:8px}.slider b{color:var(--ink);min-width:36px}
+.slider input[type=range]{width:130px;accent-color:var(--ink)}
+.slider button{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:8px;padding:4px 10px;font:inherit;font-size:12px;cursor:pointer}
+.ok{color:var(--ok);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}.chip{background:var(--chip);border-radius:999px;padding:3px 11px;font-size:12.5px}.no{color:var(--muted)}
+details.notes{max-width:1280px;margin:0 auto 40px;padding:0 20px;color:var(--ink2);font-size:13px}
+details.notes summary{cursor:pointer;font-weight:600;color:var(--ink);padding:10px 0}
+details.notes ul{margin:6px 0 10px 18px;padding:0}details.notes li{margin:4px 0}
+details.notes .card{margin-top:6px}
+code{font-family:ui-monospace,Menlo,monospace;font-size:12px}
+.metat td{font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="top"><div class="top-in">
+  <div><h1>Protein design model dashboard</h1><div class="sub">ProteinMPNN vs. ESM-IF1 · each designs amino-acid sequences for a given protein backbone · {{n_struct:0}} proteins · 4 families · {{n_designs:c}} designs</div></div>
+  <div class="pills" id="pills" role="group" aria-label="Protein family filter"></div>
+</div></div>
+<div class="legend" id="legend"></div>
+
+<main class="grid">
+  <div class="card kpi span3"><div class="lab">Designs generated</div><div class="big" id="k1"></div><div class="note" id="k1n"></div></div>
+  <div class="card kpi span3"><div class="lab">Match to natural sequence</div><div class="row"><div><div class="who" style="color:var(--blue)">ProteinMPNN</div><div class="num" id="k2m"></div></div><div><div class="who" style="color:var(--orange)">ESM-IF1</div><div class="num" id="k2e"></div></div></div><div class="note">low → high temperature</div></div>
+  <div class="card kpi span3"><div class="lab">Variety between designs</div><div class="row"><div><div class="who" style="color:var(--blue)">ProteinMPNN</div><div class="num" id="k3m"></div></div><div><div class="who" style="color:var(--orange)">ESM-IF1</div><div class="num" id="k3e"></div></div></div><div class="note">low → high temperature</div></div>
+  <div class="card kpi span3"><div class="lab">Time per design</div><div class="row"><div><div class="who" style="color:var(--blue)">ProteinMPNN</div><div class="num" id="k4m"></div></div><div><div class="who" style="color:var(--orange)">ESM-IF1</div><div class="num" id="k4e"></div></div></div><div class="note" id="k4n"></div></div>
+
+  <div class="card span8"><div class="ch"><h2>Match vs. variety<span class="info" title="Match = % of positions where a design has the same amino acid as the natural protein. Variety = on average, % of positions that differ between two designs for the same protein. Each point is one temperature setting, averaged over proteins.">i</span></h2></div>
+    <div class="say">Raising temperature makes designs more varied but less like the natural sequence.</div><div id="c-trade"></div></div>
+  <div class="card span4"><div class="ch"><h2>By protein family<span class="info" title="Each tool at its own default temperature: ProteinMPNN 0.1, ESM-IF1 1.0. Defaults are not equally creative, so also read the variety panel.">i</span></h2></div>
+    <div class="say">At each tool's default temperature.</div><div id="c-fam"></div></div>
+
+  <div class="card span6"><div class="ch"><h2>Match across proteins<span class="info" title="Each dot is one protein: the average match of its 20 designs. The box shows how much this varies between proteins (line = median, dashed = average).">i</span></h2></div>
+    <div class="say">Each dot is one protein; box = spread between proteins.</div><div id="c-rec"></div></div>
+  <div class="card span6"><div class="ch"><h2>Model confidence<span class="info" title="Each tool scores its own designs: the average probability it assigns to each chosen amino acid (from its own log-likelihood). The two tools use different scales, so compare the trend within a tool, not the bars between tools.">i</span></h2></div>
+    <div class="say">Average probability a tool gives its own choices. Compare trends within a tool, not between tools.</div><div id="c-conf"></div></div>
+
+  <div class="card span6"><div class="ch"><h2>Time per design<span class="info" title="CPU time on an Apple M2 Pro, one design at a time. Includes scoring the design. Each dot is one protein.">i</span></h2></div>
+    <div class="say" id="say-time"></div><div id="c-time"></div></div>
+  <div class="card span6"><div class="ch"><h2>Which setting fits my goal?</h2></div>
+    <div class="say">Set the minimum match and variety you need. The table shows which settings qualify.</div>
+    <div class="slider">
+      <label>Match at least <input id="s-rec" type="range" min="0.30" max="0.80" step="0.01" value="0.42"><b id="s-rec-v"></b></label>
+      <label>Variety at least <input id="s-div" type="range" min="0.10" max="0.65" step="0.01" value="0.40"><b id="s-div-v"></b></label>
+      <button id="p-exploit">Stay close to natural</button><button id="p-explore">Explore widely</button>
+    </div><div id="whatif"></div></div>
+  <div class="card span12"><div class="ch"><h2>Summary by setting</h2></div><div class="say">Same measures as above, side by side.</div>
+    <div class="chips"><span class="chip ok">✓ {{n_valid:c}} / {{n_designs:c}} designs valid</span><span class="chip ok">✓ 0 failed runs</span><span class="chip ok">✓ {{n_unique_settings:0}} / {{n_settings:0}} settings with 20 distinct designs</span><span class="chip ok">✓ re-run from seed gave identical sequences ({{n_repro:0}} of {{n_settings:0}} settings checked)</span></div>
+    <div id="c-table"></div></div>
+
+</main>
+
+<details class="notes"><summary>Definitions, scope and reproducibility</summary>
+  <div class="card"><ul>
+    <li><b>Match to natural sequence</b> (also called native sequence recovery): share of positions where a design uses the same amino acid as the experimentally observed protein. It does not show that a design folds or works.</li>
+    <li><b>Variety</b>: on average, the share of positions that differ between two designs for the same protein.</li>
+    <li><b>Temperature</b> controls how adventurous the sampling is. Each tool has its own scale, so the same number does not mean the same behaviour.</li>
+    <li><b>How numbers are averaged</b>: for one setting (e.g. ProteinMPNN at T 0.1), average the 20 designs of each protein, then average across the proteins, each counting equally.</li>
+    <li><b>Inputs</b>: only the backbone atoms of one chain from an experimental structure. The natural sequence is used afterwards for scoring only.</li>
+    <li><b>Scope</b>: {{n_struct:0}} proteins (8 per family), computational only, no lab or folding validation. Family-level results are descriptive. Some proteins may be re-determinations of structures the models saw in training; this was not analysed.</li>
+    <li><b>Timing</b>: M2 Pro CPU, batch of 1. {{n_retimed:0}} settings slowed by machine load were re-measured and gave identical sequences.</li>
+    <li><b>Before any lab work</b>: re-folding and stability checks, family-specific goals agreed with scientists, and controls such as the native and shuffled sequences.</li>
+  </ul>
+  <div id="meta"></div></div>
+</details>
+
+<script>/*PLOTLY_JS*/</script>
+<script>
+const DATA = /*DATA*/;
+const META = /*META*/;
+const M = "ProteinMPNN", E = "ESM-IF1";
+const FAMS = ["Nanobody (VHH)","Cytokine / checkpoint","Viral glycoprotein","Biocatalysis enzyme"];
+const FSHORT = {"Nanobody (VHH)":"Nanobody","Cytokine / checkpoint":"Cytokine / checkpoint","Viral glycoprotein":"Viral glycoprotein","Biocatalysis enzyme":"Enzyme"};
+const FLAB = {"Nanobody (VHH)":"Nanobody","Cytokine / checkpoint":"Cytokine /<br>checkpoint","Viral glycoprotein":"Viral<br>glycoprotein","Biocatalysis enzyme":"Enzyme"};
+const TEMPS = {[M]:[0.1,0.3,0.5],[E]:[0.5,1.0,1.5]};
+const DEFAULT_T = {[M]:0.1,[E]:1.0};
+const CATS = [[M,0.1],[M,0.3],[M,0.5],[E,0.5],[E,1.0],[E,1.5]];
+const short = m => m === M ? "ProteinMPNN" : "ESM-IF1";
+const S = DATA.S;
+let FAM = (FAMS.find(f=>('#'+FSHORT[f].split(' ')[0]).toLowerCase()===location.hash.toLowerCase()) || 'ALL');
+const eq = (a,b)=>Math.abs(a-b)<1e-9;
+const inF = r => FAM==='ALL' || r.family===FAM;
+const sel = (m,T)=>S.filter(r=>r.model===m && eq(r.temperature,T) && inF(r));
+const mean = a=>a.length ? a.reduce((x,y)=>x+y,0)/a.length : NaN;
+const avg = (m,T,k)=>mean(sel(m,T).map(r=>r[k]));
+const conf = (m,T)=>mean(sel(m,T).map(r=>Math.exp(r.score_loglik_mean)));
+function jit(s){ let h=0; for (const c of s) h=(h*31+c.charCodeAt(0))|0; return ((h>>>0)%1000)/1000-0.5; }
+
+function css(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+function th(){ return {ink:css('--ink'),ink2:css('--ink2'),muted:css('--muted'),grid:css('--grid'),card:css('--card'),line:css('--line'),col:{[M]:css('--blue'),[E]:css('--orange')}}; }
+function rgba(hex,a){ const n=parseInt(hex.replace('#',''),16); return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`; }
+const FONT = '-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif';
+function ax(t,extra){ return Object.assign({gridcolor:t.grid,zeroline:false,linecolor:t.line,tickfont:{color:t.ink2,size:12},title:{font:{color:t.ink2,size:12}},automargin:true}, extra||{}); }
+function lay(t,h,extra){ return Object.assign({height:h,paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',font:{color:t.ink2,size:12,family:FONT},margin:{l:56,r:12,t:10,b:44},
+  showlegend:false,hoverlabel:{bgcolor:t.card,bordercolor:t.line,font:{color:t.ink,family:FONT}}}, extra||{}); }
+const CFG = {displaylogo:false,responsive:true,displayModeBar:false};
+const ann = (text,x,y,t,o)=>Object.assign({text,x,y,xref:'paper',yref:'paper',showarrow:false,font:{color:t.ink,size:12.5}},o||{});
+const pc0 = v=>(100*v).toFixed(0)+'%', pc1 = v=>(100*v).toFixed(1)+'%';
+const tickText = CATS.map(c=>`${c[0]===M?'ProteinMPNN':'ESM-IF1'}<br>T ${c[1].toFixed(1)}`);
+
+// ---- header ----
+function pills(){
+  const el = document.getElementById('pills');
+  el.innerHTML = [['ALL','All families']].concat(FAMS.map(f=>[f,FSHORT[f]])).map(([v,l])=>`<button class="pill" data-v="${v}" aria-pressed="${v===FAM}">${l}</button>`).join('');
+  el.querySelectorAll('button').forEach(b=>b.onclick=()=>{ FAM=b.dataset.v; el.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.v===FAM)); renderAll(); });
+}
+function legend(){
+  const t = th();
+  document.getElementById('legend').innerHTML =
+    `<span><svg width="10" height="10"><circle cx="5" cy="5" r="5" fill="${t.col[M]}"/></svg>ProteinMPNN</span><span><svg width="10" height="10"><circle cx="5" cy="5" r="5" fill="${t.col[E]}"/></svg>ESM-IF1</span>` +
+    `<span class="tt">Temperature (T): low = conservative, high = adventurous. Scales differ between tools.</span>`;
+}
+
+// ---- KPIs ----
+function kpis(){
+  const n = new Set(S.filter(inF).map(r=>r.pdb_id)).size;
+  document.getElementById('k1').textContent = (n*120).toLocaleString();
+  document.getElementById('k1n').textContent = `${n} proteins × 2 tools × 3 temperatures × 20`;
+  const rng = (m,k,f)=>`${f(avg(m,TEMPS[m][0],k))} → ${f(avg(m,TEMPS[m][2],k))}`;
+  document.getElementById('k2m').textContent = rng(M,'recovery_mean',pc0); document.getElementById('k2e').textContent = rng(E,'recovery_mean',pc0);
+  document.getElementById('k3m').textContent = rng(M,'pairwise_distance_mean',pc0); document.getElementById('k3e').textContent = rng(E,'pairwise_distance_mean',pc0);
+  const sm = mean(S.filter(r=>r.model===M&&inF(r)).map(r=>r.gen_sec_per_design)), se = mean(S.filter(r=>r.model===E&&inF(r)).map(r=>r.gen_sec_per_design));
+  document.getElementById('k4m').textContent = sm.toFixed(2)+' s'; document.getElementById('k4e').textContent = se.toFixed(2)+' s';
+  document.getElementById('k4n').textContent = `ESM-IF1 is ${(se/sm).toFixed(0)}× slower`;
+  document.getElementById('say-time').textContent = `ESM-IF1 is about ${(se/sm).toFixed(0)}× slower, and both take longer on larger proteins.`;
+}
+
+// ---- hero: match vs variety ----
+function chartTrade(){
+  const t = th(), traces = [];
+  [M,E].forEach(m=>{
+    const x = TEMPS[m].map(T=>avg(m,T,'pairwise_distance_mean')), y = TEMPS[m].map(T=>avg(m,T,'recovery_mean'));
+    traces.push({type:'scatter',mode:'lines+markers+text',x,y,text:TEMPS[m].map((v,i)=>(i===0?`<b>${short(m)}</b><br>`:'')+'T '+v.toFixed(1)),textposition:m===M?'bottom center':'top center',textfont:{color:t.ink,size:12.5},
+      line:{color:t.col[m],width:3.5},marker:{size:14,color:t.col[m],line:{color:t.card,width:2.5}},customdata:TEMPS[m],
+      hovertemplate:`${short(m)} · T=%{customdata}<br>variety %{x:.0%}<br>match to natural %{y:.0%}<extra></extra>`});
+  });
+  const allx = traces.flatMap(q=>q.x), ally = traces.flatMap(q=>q.y);
+  const L = lay(t,420,{margin:{l:62,r:20,t:14,b:50}});
+  L.xaxis = ax(t,{title:{text:'Variety between designs  →  more different from each other',font:{color:t.ink2,size:12.5}},range:[Math.min(...allx)-0.07,Math.max(...allx)+0.07],tickformat:'.0%'});
+  L.yaxis = ax(t,{title:{text:'Match to natural sequence  →  closer to nature',font:{color:t.ink2,size:12.5}},tickformat:'.0%',range:[Math.min(...ally)-0.05,Math.max(...ally)+0.06]});
+  Plotly.react('c-trade', traces, L, CFG);
+}
+
+// ---- by family at each tool's default temperature ----
+function chartFam(){
+  const t = th(), traces = [], L = lay(t,420,{margin:{l:46,r:10,t:26,b:50},barmode:'group',bargap:0.25,bargroupgap:0.06});
+  const val = (m,f,k)=>mean(S.filter(r=>r.model===m&&eq(r.temperature,DEFAULT_T[m])&&r.family===f).map(r=>r[k]));
+  [['recovery_mean','x','y'],['pairwise_distance_mean','x2','y2']].forEach(([k,xa,ya],pi)=>{
+    [M,E].forEach(m=>{
+      traces.push({type:'bar',xaxis:xa,yaxis:ya,x:FAMS.map(f=>FLAB[f]),y:FAMS.map(f=>val(m,f,k)),name:short(m),
+        marker:{color:FAMS.map(f=>FAM==='ALL'||FAM===f?t.col[m]:rgba(t.col[m],0.3))},text:FAMS.map(f=>pc0(val(m,f,k))),textposition:'outside',textfont:{color:t.ink,size:11.5},cliponaxis:false,
+        customdata:FAMS.map(f=>`${short(m)} at T=${DEFAULT_T[m]}`),hovertemplate:`%{x}<br>%{customdata}<br>%{y:.0%}<extra></extra>`});
+    });
+  });
+  L.xaxis = ax(t,{domain:[0,1],anchor:'y',gridcolor:'rgba(0,0,0,0)',tickfont:{color:t.ink,size:10.5}});
+  L.yaxis = ax(t,{domain:[0.62,0.93],range:[0,0.85],tickformat:'.0%',tickvals:[0,0.25,0.5,0.75],gridcolor:t.grid});
+  L.xaxis2 = ax(t,{domain:[0,1],anchor:'y2',gridcolor:'rgba(0,0,0,0)',tickfont:{color:t.ink,size:10.5}});
+  L.yaxis2 = ax(t,{domain:[0.0,0.28],range:[0,0.85],tickformat:'.0%',tickvals:[0,0.25,0.5,0.75]});
+  L.annotations = [ann('<b>Match to natural sequence</b>',0,0.995,t,{xanchor:'left',yanchor:'top',font:{color:t.ink,size:12.5}}), ann('<b>Variety between designs</b>',0,0.40,t,{xanchor:'left',yanchor:'top',font:{color:t.ink,size:12.5}})];
+  Plotly.react('c-fam',traces,L,CFG);
+}
+
+// ---- match across proteins ----
+function chartRec(){
+  const t = th(), traces = [];
+  CATS.forEach(([m,T],ci)=>{
+    const pts = sel(m,T);
+    traces.push({type:'box',x:pts.map(()=>ci),y:pts.map(r=>r.recovery_mean),width:0.55,boxpoints:false,boxmean:true,line:{color:t.col[m],width:1.6},fillcolor:rgba(t.col[m],0.18),hoverinfo:'skip'});
+    traces.push({type:'scatter',mode:'markers',x:pts.map(r=>ci+0.38*jit(r.pdb_id)),y:pts.map(r=>r.recovery_mean),text:pts.map(r=>`${r.pdb_id} · ${FSHORT[r.family]} · ${r.length} residues`),
+      marker:{size:7,color:t.col[m],opacity:0.75,line:{color:t.card,width:0.8}},hovertemplate:`%{text}<br>${short(m)} T=${T}<br>match %{y:.0%}<extra></extra>`});
+  });
+  const L = lay(t,360,{margin:{l:60,r:12,t:10,b:60}});
+  L.xaxis = ax(t,{range:[-0.6,5.6],tickvals:[0,1,2,3,4,5],ticktext:tickText,tickfont:{color:t.ink2,size:11.5},gridcolor:'rgba(0,0,0,0)'});
+  L.yaxis = ax(t,{title:{text:'Match to natural sequence',font:{color:t.ink2,size:12}},range:[0.2,0.85],tickformat:'.0%'});
+  Plotly.react('c-rec',traces,L,CFG);
+}
+
+// ---- model confidence ----
+function chartConf(){
+  const t = th(), v = CATS.map(([m,T])=>conf(m,T));
+  const tr = {type:'bar',x:CATS.map((_,i)=>i),y:v,width:0.55,marker:{color:CATS.map(([m])=>rgba(t.col[m],0.9))},text:v.map(pc0),textposition:'outside',textfont:{color:t.ink,size:13},cliponaxis:false,
+    customdata:CATS.map(([m,T])=>`${short(m)} T=${T}`),hovertemplate:'%{customdata}<br>%{y:.0%} average probability per amino acid<extra></extra>'};
+  const L = lay(t,360,{margin:{l:60,r:12,t:24,b:60},bargap:0.3});
+  L.xaxis = ax(t,{range:[-0.6,5.6],tickvals:[0,1,2,3,4,5],ticktext:tickText,tickfont:{color:t.ink2,size:11.5},gridcolor:'rgba(0,0,0,0)'});
+  L.yaxis = ax(t,{title:{text:'Avg. probability per amino acid',font:{color:t.ink2,size:12}},range:[0,0.75],tickformat:'.0%'});
+  Plotly.react('c-conf',[tr],L,CFG);
+}
+
+// ---- time per design ----
+function chartTime(){
+  const t = th(), traces = [];
+  [M,E].forEach(m=>{
+    const per = {}; S.filter(r=>r.model===m&&inF(r)).forEach(r=>{ (per[r.pdb_id] ||= {r,v:[]}).v.push(r.gen_sec_per_design); });
+    const pts = Object.values(per).map(o=>({pdb:o.r.pdb_id,fam:o.r.family,len:o.r.length,sec:mean(o.v)}));
+    traces.push({type:'scatter',mode:'markers',x:pts.map(p=>p.len),y:pts.map(p=>p.sec),text:pts.map(p=>`${p.pdb} · ${FSHORT[p.fam]}`),
+      marker:{size:9,color:t.col[m],opacity:0.85,line:{color:t.card,width:1}},hovertemplate:`%{text}<br>%{x} residues · %{y:.2f} s<extra>${short(m)}</extra>`});
+    if (pts.length>1){ const xs=pts.map(p=>p.len), ys=pts.map(p=>p.sec), mx=mean(xs), my=mean(ys);
+      const b = xs.reduce((a,x,i)=>a+(x-mx)*(ys[i]-my),0)/xs.reduce((a,x)=>a+(x-mx)**2,0), a0 = my-b*mx, x0=Math.min(...xs), x1=Math.max(...xs);
+      traces.push({type:'scatter',mode:'lines+text',x:[x0,x1],y:[a0+b*x0,a0+b*x1],text:['',short(m)],textposition:'top left',textfont:{color:t.ink,size:12.5},line:{color:t.col[m],width:2.4},hoverinfo:'skip'}); }
+  });
+  const L = lay(t,340,{margin:{l:56,r:20,t:14,b:50}});
+  L.xaxis = ax(t,{title:{text:'Protein size (residues)',font:{color:t.ink2,size:12}},rangemode:'tozero'});
+  L.yaxis = ax(t,{title:{text:'Seconds per design',font:{color:t.ink2,size:12}},rangemode:'tozero'});
+  Plotly.react('c-time',traces,L,CFG);
+}
+
+// ---- summary table ----
+function scorecard(){
+  const t = th();
+  const cols = [['Valid designs','valid_pct',100,v=>v.toFixed(0)+'%'],['Distinct designs','unique_pct',100,v=>v.toFixed(0)+'%'],['Match to natural','recovery_mean',1,pc1],
+    ['Variety','pairwise_distance_mean',1,pc1],['Seconds per design','gen_sec_per_design',null,v=>v.toFixed(2)]];
+  const maxsec = Math.max(...S.filter(inF).map(r=>r.gen_sec_per_design))*1.1;
+  let h = '<table><tr><th>Setting</th>'+cols.map(c=>`<th>${c[0]}</th>`).join('')+'</tr>';
+  CATS.forEach(([m,T])=>{ h += `<tr><td style="white-space:nowrap"><span class="sw" style="background:${t.col[m]}"></span>${short(m)} · T ${T.toFixed(1)}</td>` + cols.map(c=>{
+    const v = avg(m,T,c[1]), sc = c[2]||maxsec; return `<td><div class="cell"><div class="bar" style="flex:1"><i style="width:${Math.min(100,100*v/sc)}%;background:${t.col[m]}"></i></div><span>${c[3](v)}</span></div></td>`; }).join('')+'</tr>'; });
+  document.getElementById('c-table').innerHTML = h+'</table>';
+}
+
+// ---- goal fit ----
+function whatif(){
+  const mr = +document.getElementById('s-rec').value, md = +document.getElementById('s-div').value, t = th();
+  document.getElementById('s-rec-v').textContent = pc0(mr); document.getElementById('s-div-v').textContent = pc0(md);
+  let h = '<table><tr><th>Setting</th><th class="n">Match to natural</th><th class="n">Variety</th><th>Qualifies?</th></tr>';
+  CATS.forEach(([m,T])=>{ const rc = avg(m,T,'recovery_mean'), dv = avg(m,T,'pairwise_distance_mean'), ok = rc>=mr && dv>=md;
+    h += `<tr><td><span class="sw" style="background:${t.col[m]}"></span>${short(m)} · T ${T.toFixed(1)}</td><td class="n ${rc>=mr?'':'no'}">${pc1(rc)}</td><td class="n ${dv>=md?'':'no'}">${pc1(dv)}</td><td class="${ok?'ok':'no'}">${ok?'✓ qualifies':'–'}</td></tr>`; });
+  document.getElementById('whatif').innerHTML = h+'</table>';
+}
+function meta(){
+  const m = META;
+  document.getElementById('meta').innerHTML = `<table class="metat">
+  <tr><td>Hardware</td><td>${m.hardware} · CPU only · ${m.os}</td></tr>
+  <tr><td>Software</td><td>Python ${m.python} · ${Object.entries(m.packages).map(([k,v])=>k+' '+v).join(', ')}</td></tr>
+  <tr><td>Models</td><td>ProteinMPNN <code>v_48_020</code> (sha256 <code>${m.sha.ProteinMPNN}…</code>) · ESM-IF1 142M <code>esm_if1_gvp4_t16_142M_UR50</code> (sha256 <code>${m.sha['ESM-IF1']}…</code>)</td></tr>
+  <tr><td>Run</td><td>${m.started} · 20 designs × 32 proteins × 3 temperatures per tool · seeds in <code>results/design_results.csv</code></td></tr></table>`;
+}
+
+function renderAll(){ legend(); kpis(); chartTrade(); chartFam(); chartRec(); chartConf(); chartTime(); scorecard(); whatif(); }
+document.getElementById('s-rec').oninput = whatif; document.getElementById('s-div').oninput = whatif;
+document.getElementById('p-explore').onclick = ()=>{ document.getElementById('s-rec').value=0.42; document.getElementById('s-div').value=0.40; whatif(); };
+document.getElementById('p-exploit').onclick = ()=>{ document.getElementById('s-rec').value=0.50; document.getElementById('s-div').value=0.20; whatif(); };
+pills(); meta(); renderAll();
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderAll);
+</script>
+</body>
+</html>

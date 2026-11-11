@@ -1,0 +1,440 @@
+{
+  "started": "2026-10-02 12:45:37",
+  "designs_per_config": 20,
+  "device": "cpu",
+  "hardware": "Apple M2 Pro, 32 GB RAM",
+  "os": "macOS-14.5-arm64-arm-64bit",
+  "python": "3.11.14",
+  "packages": {
+    "torch": "2.14.1",
+    "numpy": "1.26.4",
+    "pandas": "3.0.6",
+    "scipy": "1.17.1",
+    "plotly": "7.1.0",
+    "biotite": "0.41.2",
+    "torch_geometric": "2.8.0.post1",
+    "fair-esm": "2.0.1",
+    "biopython": "1.88"
+  },
+  "checkpoints": {
+    "ProteinMPNN": {
+      "file": "vanilla_model_weights/v_48_020.pt",
+      "sha256": "c9cb4a671d79604111231f8dbfc7c590e06f1197453b7a6854ac6661a642f5bd"
+    },
+    "ESM-IF1": {
+      "file": "esm_if1_gvp4_t16_142M_UR50.pt",
+      "sha256": "be4ba36edec22a9bfaa4946ff6b2815f1f19d8a3d7e0eada8b796d5a0eae9fd4"
+    }
+  },
+  "temperatures": {
+    "ProteinMPNN": [
+      0.1,
+      0.3,
+      0.5
+    ],
+    "ESM-IF1": [
+      0.5,
+      1.0,
+      1.5
+    ]
+  },
+  "mpnn_params": {
+    "model": "v_48_020 (vanilla, 0.20 A training noise)",
+    "backbone_noise": 0.0,
+    "omit_AAs": "X",
+    "batch_size": 1,
+    "decoding": "random order"
+  },
+  "esm_params": {
+    "sampling": "multinomial, logits/T, no beam search",
+    "partial_seq": null
+  },
+  "model_load_seconds": {
+    "ProteinMPNN": 0.02002692222595215,
+    "ESM-IF1": 0.770866870880127
+  },
+  "proteins": {
+    "8P88": {
+      "chain": "C",
+      "length": 121,
+      "native_sequence": "QVQLVESGGAAVQTGGSLRLSCVASGFDLSNHAMAWVRQSPGKGLEYISGINNGGTTTTYGDSVKDRFTISRDNAKSTVYLQMNRLEADDTAVYYCVKSSYSDIVSARFDSWGKGTQVTVS",
+      "family": "Nanobody (VHH)",
+      "description": "Nanobody C4",
+      "release": "2024-01-31",
+      "resolution": 2.022,
+      "source_url": "https://files.rcsb.org/download/8P88.pdb"
+    },
+    "9UP9": {
+      "chain": "A",
+      "length": 106,
+      "native_sequence": "AWVEQTPRTATKETGESLTINCVLKDSAYALGDTYWYFTKKGTSNKNRLSIGGRYSQTVSEGSKSFSLRISDLRVEDSGTYLCEAGYWDPPYYYEGSGTILTVKAA",
+      "family": "Nanobody (VHH)",
+      "description": "nanobody protein",
+      "release": "2026-01-07",
+      "resolution": 2.0,
+      "source_url": "https://files.rcsb.org/download/9UP9.pdb"
+    },
+    "8YVJ": {
+      "chain": "A",
+      "length": 129,
+      "native_sequence": "HMAQVTLKESGGGSVQAGGSLRLSCAGPRHIPGSVCMGWYRQVPGKEREGVALILIGDGHTNYADSVKGRFTISQDSAANTVYLQMNSLKPEDTAVYYCAAARGLSDWTCSFESGVNSWGQGTQVTVSS",
+      "family": "Nanobody (VHH)",
+      "description": "H5.2 nanobody (VHH)",
+      "release": "2024-12-18",
+      "resolution": 1.65,
+      "source_url": "https://files.rcsb.org/download/8YVJ.pdb"
+    },
+    "9Y3I": {
+      "chain": "E",
+      "length": 121,
+      "native_sequence": "QLVESGGGLVQPGGSLRLSCEATGNFDDRGIGWFRQAPGKEREGIACITTRGRTHYAESVEGRFTISTDIANNAVYLQMNSLKPEDTAVYYCAKAIRLTTDRTQCVAFPGVSWGRGTQVTV",
+      "family": "Nanobody (VHH)",
+      "description": "Nanobody VHH108",
+      "release": "2026-09-09",
+      "resolution": 1.8,
+      "source_url": "https://files.rcsb.org/download/9Y3I.pdb"
+    },
+    "10ZO": {
+      "chain": "A",
+      "length": 109,
+      "native_sequence": "GLVQAGESLRLSCAVPPEVFDIRTVAWYRQVPLGKGRELLSSITPWNKTTYEDSVKDRFTISRDNAKYTVYLQMNDLKPEDTAVYYCAQGWGIASMRYWGQGTQVTVSS",
+      "family": "Nanobody (VHH)",
+      "description": "Anti-Marburgvirus Nucleoprotein Single Domain Antibody A",
+      "release": "2026-03-25",
+      "resolution": 1.65,
+      "source_url": "https://files.rcsb.org/download/10ZO.pdb"
+    },
+    "7TGF": {
+      "chain": "B",
+      "length": 129,
+      "native_sequence": "VQLAETGGGLVQPGGSLRLSCAASGFTLDDYAIGWFRQAPGKEREGVSCISSSDGRTYYADSVKGRFTISRDNAKNTVYLQMNSLKSEDTAVYYCATEEVCTLGIFGHGPDDYWGQGTQVTVSSEPKTP",
+      "family": "Nanobody (VHH)",
+      "description": "VHH camelid antibody",
+      "release": "2022-10-12",
+      "resolution": 1.347,
+      "source_url": "https://files.rcsb.org/download/7TGF.pdb"
+    },
+    "7UBX": {
+      "chain": "C",
+      "length": 121,
+      "native_sequence": "QVQLVESGGGLVQPGGSLRLSCAASGFTFSDYVMTWVRQAPGKGPEWIATINTDGSTMRDDSTKGRFTISRDNAKNTLYLQMTSLKPEDTALYYCARGRVISASAIRGAVRGPGTQVTVSS",
+      "family": "Nanobody (VHH)",
+      "description": "Nanobody VHH AA6",
+      "release": "2022-11-16",
+      "resolution": 1.81,
+      "source_url": "https://files.rcsb.org/download/7UBX.pdb"
+    },
+    "8QF4": {
+      "chain": "E",
+      "length": 127,
+      "native_sequence": "SEVQLLESGGGLVQAGDSLRLSCAASGRTFSAYAMGWFRQAPGKEREFVAAISWSGNSTYYADSVKGRFTISRDNAKNTVYLQMNSLKPEDTAIYYCAARKPMYRVDISKGQNYDYWGQGTQVTVSS",
+      "family": "Nanobody (VHH)",
+      "description": "Nanobody H11",
+      "release": "2024-03-13",
+      "resolution": 1.02,
+      "source_url": "https://files.rcsb.org/download/8QF4.pdb"
+    },
+    "7TZH": {
+      "chain": "B",
+      "length": 173,
+      "native_sequence": "LEPPTPLTVYAGAGSRVGLPCRLPAGVGTRSFLTAKWTPPGGGPDLLVTGDNGDFTLRLEDVSQAQAGTYTCHIHLQEQQLNATVTLAIITVTPKSFGSPGSLGKLLCEVTPVSGQERFVWSSLDTPSQRSFSGPWLEAQEAQLLSQPWQCQLYQGERLLGAAVYFTELSSPG",
+      "family": "Cytokine / checkpoint",
+      "description": "Lymphocyte activation gene 3 protein",
+      "release": "2022-05-11",
+      "resolution": 2.43,
+      "source_url": "https://files.rcsb.org/download/7TZH.pdb"
+    },
+    "9XNL": {
+      "chain": "A",
+      "length": 142,
+      "native_sequence": "CRWIKHKFQHHHGISLDLIKTMGEHEDINPIPYEMINNHRKAETEKQILFVIQALVEIAGLFDDAVVPWDSTKLDDFLNIVHTQIDGLRSCGEYKMKRNKKLHLYFERLRQMTELDGGKSWEIVRKRVISFMNQLEFFPFLT",
+      "family": "Cytokine / checkpoint",
+      "description": "Interferon 4",
+      "release": "2026-07-15",
+      "resolution": 1.91,
+      "source_url": "https://files.rcsb.org/download/9XNL.pdb"
+    },
+    "7TZE": {
+      "chain": "A",
+      "length": 203,
+      "native_sequence": "ELPVVWAQEGAPVHLPCSLKSPNLDPNFLRRGGVIWQHQPDGRYTVLSVAPGGLRSGRQPLHPHVQLEERGLQRGDFSLWLRPALRTDAGEYHATVRLPNRALSCSLRLRVGQASMIASPSGVLKLSDWVLLNCSFSRPDRPVSVHWFQGQNRVPVYNSPRHFLAETFLLLPQVSPLDSGTWGCVLTYRDGFNVSITYNLKVL",
+      "family": "Cytokine / checkpoint",
+      "description": "Lymphocyte activation gene 3 protein",
+      "release": "2022-05-11",
+      "resolution": 2.12,
+      "source_url": "https://files.rcsb.org/download/7TZE.pdb"
+    },
+    "8SLR": {
+      "chain": "D",
+      "length": 155,
+      "native_sequence": "QKVAAHITGITRRSNSALIPISKDGKTLGQKIESWESSRKGHSFLNHVLFRNGELVIEQEGLYYIYSQTYFRFQERTKQLVQYIYKYTSYPDPIVLMKSARNSCWSRDAEYGLYSIYQGGLFELKKNDRIFVSVTNEHLMDLDQEASFFGAFLIN",
+      "family": "Cytokine / checkpoint",
+      "description": "Tumor necrosis factor ligand superfamily member 10",
+      "release": "2024-04-03",
+      "resolution": 2.4,
+      "source_url": "https://files.rcsb.org/download/8SLR.pdb"
+    },
+    "8ALX": {
+      "chain": "A",
+      "length": 115,
+      "native_sequence": "TVTVPKDLYVVEYGSNMTIECKFPVEKQLDLAALIVYWEMEDKNIIQFVHGEEDLKVQHSSYRQRARLLKDQLSLGNAALQITDVKLQDAGVYRCMISYGGADYKRITVKVNAPY",
+      "family": "Cytokine / checkpoint",
+      "description": "Programmed cell death 1 ligand 1",
+      "release": "2023-08-16",
+      "resolution": 1.1,
+      "source_url": "https://files.rcsb.org/download/8ALX.pdb"
+    },
+    "8RYS": {
+      "chain": "A",
+      "length": 150,
+      "native_sequence": "PVRSLNCTLRDSQQKSLVMSGPYELKALHLQGQDMEQQVVFSMSFVQGEESNDKIPVALGLKEKNLYLSCVLKDDKPTLQLESVDPKNYPKKKMEKRFVFNKIEINNKLEFESAQFPNWYISTSQAENMPVFLGGTGQDITDFTMQFVSS",
+      "family": "Cytokine / checkpoint",
+      "description": "Interleukin-1 beta",
+      "release": "2024-03-06",
+      "resolution": 1.16,
+      "source_url": "https://files.rcsb.org/download/8RYS.pdb"
+    },
+    "9EHT": {
+      "chain": "F",
+      "length": 111,
+      "native_sequence": "WNPPTFSPALLVVTEGDNATFTCSFSNTSESFVLNWYRMSTDKLAAFPEDRSQPDSRFRVTQLPNGRDFHMSVVRARRNDSGTYLCGAISLAPKAQIKESLRAELRVTERR",
+      "family": "Cytokine / checkpoint",
+      "description": "Programmed cell death protein 1",
+      "release": "2025-12-03",
+      "resolution": 1.544,
+      "source_url": "https://files.rcsb.org/download/9EHT.pdb"
+    },
+    "7DV4": {
+      "chain": "A",
+      "length": 115,
+      "native_sequence": "AMHVAQPAVVLASSRGIASFVCEYASPGTEVRVTVLRQADSQVTEVCAATYMMGNELTFLDDSICTGTSSGNQVNLTIQGLRAMDTGLYICKVELMYPPPYYLGIGNGTQIYVID",
+      "family": "Cytokine / checkpoint",
+      "description": "Cytotoxic T-lymphocyte protein 4",
+      "release": "2022-01-12",
+      "resolution": 2.38,
+      "source_url": "https://files.rcsb.org/download/7DV4.pdb"
+    },
+    "9CP0": {
+      "chain": "A",
+      "length": 230,
+      "native_sequence": "PVQIYSPSLFGEPALYGSTATIGQRVPVAAVCMQAVGGAQKVYTYSLRELLDPVFVQNGNIIDITVIDLPTYPIYQKDGSDYSPIGDVYAAHFTTIGSSRPVQWTTVLWRANISKQIRLRGHATPTDQFLFFNPQLSMSGSNLPTTTYGLTVSSLVSLTERQEEINAGKWYLSTFVAFNGRREFDNYGIPFYLSLQQIDTQQGNYEPTTEAYNVGAMLNTATPLKLHLNA",
+      "family": "Viral glycoprotein",
+      "description": "Spike protein",
+      "release": "2024-10-23",
+      "resolution": 1.85,
+      "source_url": "https://files.rcsb.org/download/9CP0.pdb"
+    },
+    "8V5Q": {
+      "chain": "G",
+      "length": 116,
+      "native_sequence": "RLIEVSVEENHPFTLRAPIQRIYGVRYTETWSFLPSLEDQLAEISYRFQADQPWIVVNTSTLFDELELDPPEIEPGVLKVLRTEKQYLGVYIWNMRGSDGTSTYATFLVTWKGDEK",
+      "family": "Viral glycoprotein",
+      "description": "Envelope glycoprotein E",
+      "release": "2024-12-11",
+      "resolution": 1.9,
+      "source_url": "https://files.rcsb.org/download/8V5Q.pdb"
+    },
+    "9H0B": {
+      "chain": "A",
+      "length": 277,
+      "native_sequence": "DLPNCDIEAWLNSKTVSSPLNWERKIFSNCNFNMGRLMSFIQADSFGCNNIDASRLYGMCFGSITIDKFAIPNSRKVDLQVGKSGYLQSFNYKIDTAVSSCQLYYSLPAANVSVTHYNPSSWNRRYGFNNQSFGSRGLHDAVYSQQCFNTPNTYCPCRTSQCIGGAGTGTCPVGTTVRKCFAAVTNATKCTCWCQPDPSTYKGVNAWTCPQSKVSIQPGQHCPGLGLVEDDCSGNPCTCKPQAFIGWSSETCLQNGRCNIFANFILNDVNSGTTCST",
+      "family": "Viral glycoprotein",
+      "description": "Spike glycoprotein",
+      "release": "2025-08-06",
+      "resolution": 2.25,
+      "source_url": "https://files.rcsb.org/download/9H0B.pdb"
+    },
+    "9GHJ": {
+      "chain": "B",
+      "length": 143,
+      "native_sequence": "FFSWSLTDGYCLEEWMLVAAKMKCFGNTAVAKCNLNHDSEFCDMLRLFDYNKNAIKTLVNLCGQTINALISDNLLMKNKIRELMSVPYCNYTKFWYVNHTLSGQHSLPRCWLIKNNSYLNISDFRNDWILESDFLISEMLSKE",
+      "family": "Viral glycoprotein",
+      "description": "Glycoprotein G2",
+      "release": "2025-06-11",
+      "resolution": 2.09,
+      "source_url": "https://files.rcsb.org/download/9GHJ.pdb"
+    },
+    "7QU1": {
+      "chain": "C",
+      "length": 152,
+      "native_sequence": "ELPSLCMLNNSFYYMKGGANIFLIRVSDVSVLMKEYDVSVYEPEDLGNCLNKSDSSWAIHWFSIALGHDWLMDPPMLCRNKTKKEGSNIQFNISKADESRVYGKKIRNGMRHLFRGFYDPCEEGKVCYVTINQCGDPSSFEYCGTNYLSKCQ",
+      "family": "Viral glycoprotein",
+      "description": "Pre-glycoprotein polyprotein GP complex",
+      "release": "2022-02-09",
+      "resolution": 1.91,
+      "source_url": "https://files.rcsb.org/download/7QU1.pdb"
+    },
+    "8YSH": {
+      "chain": "B",
+      "length": 209,
+      "native_sequence": "VECDFSPLLSGTPPQVYNFKRLVFTNCNYNLTKLLSLFSVNDFTCSQISPAAIASNCYSSLILDYFSYPLSMKSDLSVSSAGPISQFNYKQSFSNPTCLILATVPHNLTTITKPLKYSYINKCSRLLSDDRTEVPQLVNANQYSPCVSIVPSTVWEDGDYYRKQLSPLEGGGWLVASGSTVAMTEQLQMGFGITVQYGTDTNSVCPKLE",
+      "family": "Viral glycoprotein",
+      "description": "Spike glycoprotein",
+      "release": "2024-09-11",
+      "resolution": 1.99,
+      "source_url": "https://files.rcsb.org/download/8YSH.pdb"
+    },
+    "7T1V": {
+      "chain": "A",
+      "length": 315,
+      "native_sequence": "DKICLGHHAVSNGTKVDTLTEKGIEVVNATETVEQKNIPKICSKGKQTIDLGQCGLLGTTIGPPQCDQFLEFSANLIIERREGDDICYPGKFDNEETLRKILRKSGGIKKENMGFTYTGVRTNGETSACRRSRSSFYAEMKWLLSNTDNGVFPQMTKSYKNTKREPALIIWGIHHSGSTAEQTRLYGSGNKLITVWSSKYQQSFAPSPGPRPQINGQSGRIDFYWLMLDPNDTVTFSFNGAFIAPDRASFLRGKSLGIQSDAQLDNNCEGECYHIGGTIISNLPFQNINSRAIGKCPRYVKQKSLMLATGMKNVP",
+      "family": "Viral glycoprotein",
+      "description": "Hemagglutinin HA1 chain",
+      "release": "2022-01-12",
+      "resolution": 2.05,
+      "source_url": "https://files.rcsb.org/download/7T1V.pdb"
+    },
+    "8W0W": {
+      "chain": "C",
+      "length": 221,
+      "native_sequence": "WHINRTALNCNDSLHTGFLAALFYTHKFNASGCPERMAHCRPIDEFAQGWGPITYADQRPYCWHYAPRQCGTIPASQVCGPVYCFTPSPVVVGTTDRFGAPTYTWGENETDVLILNNTRPPQGNWFGCTWMNSTGFTKTCGGPPCNIGGVGNNTLTCPTDCFRKHPEATYTKCGSGPWLTPRCLVDYPYRLWHYPCTVNFTIFKVRMYVGGVEHRLNAACN",
+      "family": "Viral glycoprotein",
+      "description": "Envelope glycoprotein E2",
+      "release": "2024-03-27",
+      "resolution": 2.13,
+      "source_url": "https://files.rcsb.org/download/8W0W.pdb"
+    },
+    "9L37": {
+      "chain": "A",
+      "length": 270,
+      "native_sequence": "NPTYFFTFGDSYSQTGFSASGTQPSASNPMGNPDLGIGTTTNGPNWIGYLTTTENASLVLSYNLAAGGATIDNALVPFYPGDLASQFRLFEDVYADKPASAPWSAEDAVFGVWIGINDIGNAYYSTDAETYTPKLISRLESLVEEVYKNGGRKFLFLNVPPTSRSPLFLEQGEEVVKQHAEYLSVYNENLEGMVDDFTKKKGDVTTVLYDSWSFMTKILDDPTAYGFPDATCINDDGTSCIWWDNYHPGMKYHLLQAEDMKPKLRKLGGW",
+      "family": "Biocatalysis enzyme",
+      "description": "Cellulose-binding GDSL lipase/acylhydrolase",
+      "release": "2025-10-29",
+      "resolution": 1.44,
+      "source_url": "https://files.rcsb.org/download/9L37.pdb"
+    },
+    "7YPD": {
+      "chain": "A",
+      "length": 237,
+      "native_sequence": "SATVYVISGATRGIGFALTSLLAQRDNVLIFAGARDPAKALPLQALAAATGKVIPVKLESANEEDAAALAKLVKEKAGKVDFLLANAGVCELNKPVLSTPSATFVDHFTVNTLGPLTLFQQFYSLLTESSSPRFFVTSSAGGSTTYVSMAPDMDLAPYGISKAAVNHLVAHIARKFGAKDGLVAAVVHPGLVATDMTRPFLISPDESAAALVKIFDEAKRETHGGKFLSYDGTEIPW",
+      "family": "Biocatalysis enzyme",
+      "description": "Carbonyl reductase",
+      "release": "2024-02-07",
+      "resolution": 1.27,
+      "source_url": "https://files.rcsb.org/download/7YPD.pdb"
+    },
+    "9N8R": {
+      "chain": "A",
+      "length": 278,
+      "native_sequence": "MTLLYRDMNQAQLDAAYNNTQAVPDFPGIYAALQARSASFYASAAGRLNLPYGTAPRQRYDWLPCGKADAPTLIFIHGGYWQNCSKEDFAFIAAGPLAAGFNIVLAEYTLAPQASMTQIVSEIGSLLEHLQADADQLGIAGHKVVLSGHSAGGHLALQFRSHPWVTDVLAISALVDLEPISLSWLNEKLSLSEAEIDAYSPLYHIDKGANTWVAVGADELSELVRQSDEYAKQALARGESVQLIHVPGCTHFSVLDEMAKPQGALLQALSSIRLEHHH",
+      "family": "Biocatalysis enzyme",
+      "description": "Lipase 1",
+      "release": "2026-02-11",
+      "resolution": 1.62,
+      "source_url": "https://files.rcsb.org/download/9N8R.pdb"
+    },
+    "9C9E": {
+      "chain": "A",
+      "length": 211,
+      "native_sequence": "AAAWPRAVLFDLLTALLDSWTVWNSAAGSEAAGRDWRAEYLRLTYGCGAYQPYEDLVREAARNRGLPASAADRLEAQWDQLQPWDGARELLAALRPHCRLAVVTNCSERLGQRAAALLGVDWDVVVTSEAAGFYKPDPRPYQLALDRLGLPADQAAFVAGSGYDLFGTSAVGLRTFWHNRVGLSRPAGAPAAEGEAATLAPALPWLRGFAA",
+      "family": "Biocatalysis enzyme",
+      "description": "Fluoroacetate dehalogenase 4A",
+      "release": "2025-08-27",
+      "resolution": 1.585,
+      "source_url": "https://files.rcsb.org/download/9C9E.pdb"
+    },
+    "9RHW": {
+      "chain": "A",
+      "length": 279,
+      "native_sequence": "MTTTRTERNFAGIGDVRIVYDVWTPDTAPQAVVVLAHGLGEHARRYDHVAQRLGAAGLVTYALDHRGHGRSGGKRVLVRDISEYTADFDTLVGIATREYPGCKRIVLGHSMGGGIVFAYGVERPDNYDLMVLSAPAVAAQDLVSPVVAVAAKLLGVVVPGLPVQELDFTAISRDPEVVQAYNTDPLVHHGRVPAGIGRALLQVGETMPRRAPALTAPLLVLHGTDDRLIPIEGSRRLVECVGSADVQLKEYPGLYHEVFNEPERNQVLDDVVAWLTERL",
+      "family": "Biocatalysis enzyme",
+      "description": "Monoacylglycerol lipase",
+      "release": "2025-08-13",
+      "resolution": 1.25,
+      "source_url": "https://files.rcsb.org/download/9RHW.pdb"
+    },
+    "9NFH": {
+      "chain": "A",
+      "length": 118,
+      "native_sequence": "PVYMVYVSQDRLTPSAKHAVAKAITDAHRGLTGTQHFLAQVNFQEQPAGNVFLGGVQQGGDTIFVHGLHREGRSADLKGQLAQRIVDDVSVAAEIDRKHIWVYFGEMPAQQMVEYGRF",
+      "family": "Biocatalysis enzyme",
+      "description": "Cis-3-chloroacrylic acid dehalogenase",
+      "release": "2025-04-02",
+      "resolution": 1.32,
+      "source_url": "https://files.rcsb.org/download/9NFH.pdb"
+    },
+    "8AHU": {
+      "chain": "A",
+      "length": 283,
+      "native_sequence": "GHMIKYYNINGQQVPVENATLHVSDLSILRGYGIFDYFLAREGHPLFLDDYLNRFYRSAAELYLEIPFDKAELRRQIYALLQANEVREAGIRLVLTGGYSPDGYTPVNPNLLIMMYDLPASAWEFSAQGIKIITHPFQRELPEVKTINYSTGIRMLKTIKERGATDLIYVDQGEWIRESARSNFFLVMPDNTIVTADEKILWGITRRQVIDAAREAGYAVEERRIHITELDQAREAFFTSTIKGVMAIGQIDDRVFGDGTIGKVTQELQDLFVGKVKAYLETC",
+      "family": "Biocatalysis enzyme",
+      "description": "Aminotransferase class IV",
+      "release": "2022-08-31",
+      "resolution": 1.41,
+      "source_url": "https://files.rcsb.org/download/8AHU.pdb"
+    },
+    "9EVI": {
+      "chain": "A",
+      "length": 324,
+      "native_sequence": "ATPLVKRLPSGSDPAFSQPKSVLDAGLTCQGASPSSVSKPILLVPGTGTTGPQSFDSNWIPLSTQLGYTPCWISPPPFMLNDTQVNTEYMVNAITALYAGSGNNKLPVLTWSQGGLVAQWGLTFFPSIRSKVDRLMAFAPDYKGTVLAGPLDALAVSAPSVWQQTTGSALTTALRNAGGLTQIVPTTNLYSATDEIVQPQVSNSPLDSSYLFNGKNVQAQAVCGPLFVIDHAGSLTSQFSYVVGRSALRSTTGQARSADYGITDCNPLPANDLTPEQKVAAAALLAPAAAAIVAGPKQNCEPDLMPYARPFAVGKRTCSGIVTP",
+      "family": "Biocatalysis enzyme",
+      "description": "Lipase B",
+      "release": "2025-04-09",
+      "resolution": 1.45,
+      "source_url": "https://files.rcsb.org/download/9EVI.pdb"
+    }
+  },
+  "campaign_seconds": 5963.25688123703,
+  "finished": "2026-10-02 14:25:00",
+  "excluded": [],
+  "retimed_settings": [
+    {
+      "pdb": "7QU1",
+      "model": "ESM-IF1",
+      "temperature": 1.5,
+      "original_seconds": 1060.7716572284698,
+      "retimed_seconds": 31.886895179748535
+    },
+    {
+      "pdb": "8YSH",
+      "model": "ESM-IF1",
+      "temperature": 1.5,
+      "original_seconds": 538.8994619846344,
+      "retimed_seconds": 43.58084201812744
+    },
+    {
+      "pdb": "9H0B",
+      "model": "ESM-IF1",
+      "temperature": 1.5,
+      "original_seconds": 115.50111198425292,
+      "retimed_seconds": 60.370928049087524
+    },
+    {
+      "pdb": "9GHJ",
+      "model": "ESM-IF1",
+      "temperature": 0.5,
+      "original_seconds": 59.53684711456299,
+      "retimed_seconds": 36.15917491912842
+    },
+    {
+      "pdb": "9GHJ",
+      "model": "ESM-IF1",
+      "temperature": 1.0,
+      "original_seconds": 58.65764689445496,
+      "retimed_seconds": 31.822449922561646
+    },
+    {
+      "pdb": "9GHJ",
+      "model": "ESM-IF1",
+      "temperature": 1.5,
+      "original_seconds": 58.84037804603577,
+      "retimed_seconds": 31.221176862716675
+    },
+    {
+      "pdb": "7QU1",
+      "model": "ESM-IF1",
+      "temperature": 0.5,
+      "original_seconds": 61.834598779678345,
+      "retimed_seconds": 34.022210121154785
+    },
+    {
+      "pdb": "7QU1",
+      "model": "ESM-IF1",
+      "temperature": 1.0,
+      "original_seconds": 61.38378286361694,
+      "retimed_seconds": 33.15689396858215
+    }
+  ],
+  "campaign_seconds_original_wallclock": 5963.25688123703
+}

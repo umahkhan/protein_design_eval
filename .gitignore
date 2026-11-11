@@ -1,0 +1,12 @@
+# environments, caches
+.venv/
+__pycache__/
+*.pyc
+# downloaded model weights and structures (re-created by ./run_all.sh)
+data/
+vendor/
+# interim logs/checkpoints
+results/*.partial.csv
+results/*.log
+selection/select.log
+.DS_Store

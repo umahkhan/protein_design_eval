@@ -1,0 +1,77 @@
+{
+  "started": "2026-10-01 11:27:26",
+  "designs_per_config": 20,
+  "device": "cpu",
+  "hardware": "Apple M2 Pro, 32 GB RAM",
+  "os": "macOS-14.5-arm64-arm-64bit",
+  "python": "3.11.14",
+  "packages": {
+    "torch": "2.14.1",
+    "numpy": "1.26.4",
+    "pandas": "3.0.6",
+    "scipy": "1.17.1",
+    "plotly": "7.1.0",
+    "biotite": "0.41.2",
+    "torch_geometric": "2.8.0.post1",
+    "fair-esm": "2.0.1"
+  },
+  "checkpoints": {
+    "ProteinMPNN": {
+      "file": "vanilla_model_weights/v_48_020.pt",
+      "sha256": "c9cb4a671d79604111231f8dbfc7c590e06f1197453b7a6854ac6661a642f5bd"
+    },
+    "ESM-IF1": {
+      "file": "esm_if1_gvp4_t16_142M_UR50.pt",
+      "sha256": "be4ba36edec22a9bfaa4946ff6b2815f1f19d8a3d7e0eada8b796d5a0eae9fd4"
+    }
+  },
+  "temperatures": {
+    "ProteinMPNN": [
+      0.1,
+      0.3,
+      0.5
+    ],
+    "ESM-IF1": [
+      0.5,
+      1.0,
+      1.5
+    ]
+  },
+  "mpnn_params": {
+    "model": "v_48_020 (vanilla, 0.20 A training noise)",
+    "backbone_noise": 0.0,
+    "omit_AAs": "X",
+    "batch_size": 1,
+    "decoding": "random order"
+  },
+  "esm_params": {
+    "sampling": "multinomial, logits/T, no beam search",
+    "partial_seq": null
+  },
+  "proteins": {
+    "8YK7": {
+      "chain": "A",
+      "length": 80,
+      "native_sequence": "SVTTDADKYTPEGQDVSTKTGVVPNPAEGIKNKSDLPDGTKYTWKDTPDISTEGNKPAVVVVTYPDGSKDEVPVTIHVTN",
+      "source_url": "https://files.rcsb.org/download/8YK7.pdb"
+    },
+    "8GQQ": {
+      "chain": "A",
+      "length": 99,
+      "native_sequence": "NPEFMTKVGGLGATHQADKTVEDIVNAVKPSIQSKLGTNISNLKVISYKTQLVNGTNYFVKVRTENGYAHLRIYKPFSGAASLVSVQDGKAKDDEITYF",
+      "source_url": "https://files.rcsb.org/download/8GQQ.pdb"
+    },
+    "8GC6": {
+      "chain": "A",
+      "length": 123,
+      "native_sequence": "MRLLLVEDHVPLADELMASLTRQGYAVDWLADGRDAAVQGASEPYDLIILDLGLPGRPGLEILQEWRGLGLATPVLILTARGSWAERIDGLKAGADDYLTKPFHPEELALRIQALLRRAHGLA",
+      "source_url": "https://files.rcsb.org/download/8GC6.pdb"
+    }
+  },
+  "model_load_seconds": {
+    "ProteinMPNN": 0.019537925720214844,
+    "ESM-IF1": 2.5313501358032227
+  },
+  "campaign_seconds": 226.26221299171448,
+  "finished": "2026-10-01 11:31:12"
+}
